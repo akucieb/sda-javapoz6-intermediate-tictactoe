@@ -28,7 +28,7 @@
         </GridPane>
     </center>
     <right>
-        <VBox style="-fx-background-color: azure" minWidth="300">
+        <VBox style="-fx-background-color: crimson" minWidth="300">
             <Label fx:id="logTextArea"/>
         </VBox>
     </right>
