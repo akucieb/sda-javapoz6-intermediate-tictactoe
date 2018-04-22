@@ -1,5 +1,7 @@
 package pl.sda.poznan;
 
+import pl.sda.poznan.model.Game;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -14,6 +16,7 @@ public class Server {
     public static final int DEFAULT_PORT = 5000;
     private static final String DEFAULT_HOST_NAME = "localhost";
     private ServerSocket serverSocket;
+    private Game game = new Game();
 
     /**
      * Creates server with default port - 500 and listens on localhost
@@ -27,7 +30,7 @@ public class Server {
      * Creates new server
      *
      * @param address
-     * @param port - server port
+     * @param port          - server port
      * @param maxConnection - max clients number accepted by server
      * @throws IOException
      */
@@ -45,12 +48,12 @@ public class Server {
     }
 
     private void talkWithClient(Socket socket) {
-    //communication with client
+        //communication with client
         logger.info("Client connected... Talking with client");
         Thread clientThread = new Thread(() -> {
             try {
                 Worker worker = new Worker(socket);
-                worker.setRequestListener(new MessageRequestListener());
+                worker.setRequestListener(new MessageRequestListener(game));
                 worker.startCommunication();
             } catch (IOException | ClassNotFoundException e) {
                 logger.info("Error on client thread" + e.getMessage());
